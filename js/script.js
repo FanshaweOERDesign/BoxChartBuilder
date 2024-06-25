@@ -136,6 +136,15 @@ function generateCSS() {
   color: ${fontBackgroundColor};
 }
 
+.box-container-rounded h1,
+.box-container-rounded h2,
+.box-container-rounded h3,
+.box-container-rounded h4,
+.box-container-rounded h5,
+.box-container-rounded h6 {
+  color: ${fontBackgroundColor};
+}
+
 @media screen and (max-width: 500px) {
   .box-row {
     flex-direction: column;
@@ -281,7 +290,3 @@ function copy(id) {
 			copyButton.innerHTML = originalText;
 	}, 2000);
 };
-
-
-
-
