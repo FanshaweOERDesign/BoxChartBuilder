@@ -4,6 +4,7 @@ body {
   margin: 10px 20px;
   min-width: 250px;
   background-image: url(../images/fanshawe_wallpaper.jpg);
+  background-size: cover;
 }
 
 .row {
