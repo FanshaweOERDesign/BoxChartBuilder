@@ -224,6 +224,14 @@ function updateCSS() {
   		border: ${boxBorderThick}px solid ${boxBorderColor};
 		}
 		.box-chart > .title { color: ${titleColor}; }
+		.box-container-rounded h1,
+		.box-container-rounded h2,
+		.box-container-rounded h3,
+		.box-container-rounded h4,
+		.box-container-rounded h5,
+		.box-container-rounded h6 {
+			color: ${fontColor};
+		}
 		`);
 	document.adoptedStyleSheets = [sheet];
 	generateCSS();
