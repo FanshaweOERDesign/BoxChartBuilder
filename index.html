@@ -47,38 +47,66 @@ SOFTWARE.
                     <p id="chart-box-size">Boxes: 0 x 0</p>
                 </div>
             </div>
-
             <div class="column">
-                <div class="inputs-container hide">
-                    <h3>Settings</h3>
-                    <div class="row">
-                        <label class="label-fixed" for="box-title">Box Chart Title</label>
-                        <input type="text" id="box-title" onkeyup="updateChartTitle(this.value)">
-                    </div>
-                    <div id="titleColor" class="row hide">
-                        <label class="label-fixed" for="title-color">Title Color</label>
-                        <input type="color" id="title-color" onchange="applyTitleFontColor(this.value)"
-                            value="#3B5372" />
-                    </div>
-                    <div class="row">
-                        <label class="label-fixed" for="figure-caption">Figure Caption</label>
-                        <input type="text" id="figure-caption" onkeyup="updateChartCaption(this.value)">
-                    </div>
-                    <div class="row">
-                        <label class="label-fixed" for="box-background">Box Background</label>
-                        <input type="color" id="box-background" onchange="applyGeneralBoxColor(this.value)"
-                            value="#3B5372" />
-                    </div>
-                    <div class="row">
-                        <label class="label-fixed" for="font-color">Font Color</label>
-                        <input type="color" id="font-color" onchange="applyGeneralFontColor(this.value)"
-                            value="#FFFFFF" />
-                    </div>
-                </div>
                 <div id="info-container">
                     <h2>Quick Create</h2>
                     <p>Click a box to generate the chart!</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class=" inputs-container hide">
+                    <h3>Settings</h3>
+                    <div class="row">
+                        <div class="column">
 
+                            <div class="row">
+                                <label class="label-fixed" for="box-title">Box Chart Title</label>
+                                <input type="text" id="box-title" onkeyup="updateChartTitle(this.value)">
+                            </div>
+                            <div id="titleColor" class="row hide">
+                                <label class="label-fixed" for="title-color">Title Color</label>
+                                <input type="color" id="title-color" oninput="applyTitleFontColor(this.value)"
+                                    value="#3B5372" />
+                            </div>
+                            <div class="row">
+                                <label class="label-fixed" for="figure-caption">Figure Caption</label>
+                                <input type="text" id="figure-caption" onkeyup="updateChartCaption(this.value)">
+                            </div>
+                            <div class="row">
+                                <label class="label-fixed" for="box-background">Box Background</label>
+                                <input type="color" id="box-background" oninput="applyGeneralBoxColor(this.value)"
+                                    value="#3B5372" />
+                            </div>
+                            <div class="row">
+                                <label class="label-fixed" for="font-color">Font Color</label>
+                                <input type="color" id="font-color" oninput="applyGeneralFontColor(this.value)"
+                                    value="#FFFFFF" />
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="row">
+                                <label class="label-fixed" for="box-chart-width">Box Chart Width</label>
+                                <input class="slider" type="range" min="1" max="100" value="100" id="box-chart-width" oninput="updateBoxChartWidth(this.value)">
+                                <span id="box-chart-width-value">100%</span>
+                            </div>
+                            <div class="row">
+                                <label class="label-fixed" for="box-border-thick">Box Border Thick</label>
+                                <input class="slider" type="range" min="0" max="5" value="0" id="box-border-thick" oninput="updateBorderThick(this.value)">
+                                <span id="box-border-thick-value">0px</span>
+                            </div>
+                            <div id="boxBorderColor" class="row hide">
+                                <label class="label-fixed" for="box-border-color">Box Border Color</label>
+                                <input type="color" id="box-border-color" oninput="applyBoxBorderColor(this.value)"
+                                    value="#000000"/>
+                            </div>
+                            <div class="row">
+                                <label class="label-fixed" for="box-border-radius">Box Border Radius</label>
+                                <input type="number" id="box-border-radius" value="12" min="0" oninput="updateBorderRadius(this.value)">
+                                <span>px</span>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -163,7 +191,7 @@ SOFTWARE.
                     <p>Copy and paste this code into Pressbooks!</p>
                     <button id="btn-copy-generated-html" onclick="copy('generated-html')">
                         <i class="fa-regular fa-copy"></i>
-                        Copy 
+                        Copy
                     </button>
                     <pre><code id="generated-html" class="language-markup"></code></pre>
                 </div>
@@ -172,7 +200,7 @@ SOFTWARE.
                     <p>Copy and paste this code into the Custom Styles of Pressbooks!</p>
                     <button id="btn-copy-generated-css" onclick="copy('generated-css')">
                         <i class="fa-regular fa-copy"></i>
-                        Copy 
+                        Copy
                     </button>
                     <pre><code id="generated-css" class="language-css"></code></pre>
                 </div>
