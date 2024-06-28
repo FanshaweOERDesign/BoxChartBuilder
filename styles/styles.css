@@ -4,7 +4,6 @@ body {
   margin: 10px 20px;
   min-width: 250px;
   background-image: url(../images/fanshawe_wallpaper.jpg);
-  background-size: cover;
 }
 
 .row {
@@ -16,6 +15,10 @@ body {
 .column {
   display: flex;
   flex-direction: column;
+}
+
+.hide {
+  display: none!important;
 }
 
 .main-container {
@@ -51,6 +54,10 @@ pre[class*=language-] {
 
 button:active {
   background-color: #f5f5f5;
+}
+
+#box-chart-width-value {
+  width: 36px;
 }
 
 #logo {
@@ -127,6 +134,15 @@ footer a {
   margin-bottom: 10px
 }
 
+.box-container-rounded h1,
+.box-container-rounded h2,
+.box-container-rounded h3,
+.box-container-rounded h4,
+.box-container-rounded h5,
+.box-container-rounded h6 {
+  color: #fff;
+}
+
 .box-container-rounded {
   background-color: #3B5372;
   border-radius: 12px;
@@ -134,6 +150,10 @@ footer a {
   margin-right: 10px;
   flex: 1;
   color: #fff;
+}
+
+.box-container-rounded .bordered {
+  border: 0px solid #000;
 }
 
 /*** Settings and Info Container ***/
@@ -164,17 +184,54 @@ footer a {
   margin-bottom: 8px;
 }
 
-.inputs-container .row {
+.inputs-container .column .row {
   align-items: center;
   padding: 3px 0;
+  height: 28px;
+  box-sizing: border-box;
+}
+
+.inputs-container input[type="number"]{
+  width: 50px;
+  box-sizing: border-box;
 }
 
 .label-fixed {
-  width: 110px;
+  width: 118px;
 }
 
-.hide {
-  display: none!important;
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 9px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #bc0e09;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #bc0e09;
+  cursor: pointer;
 }
 
 /*** Toolbar ***/
@@ -294,75 +351,4 @@ select {
     margin-right: 0;
     margin-bottom: 10px;
   }
-}
-
-
-/**/
-.wizzard ol {
-  list-style: none;
-  counter-reset: list-counter;
-  padding: 0;
-}
-
-.wizzard li {
-  counter-increment: list-counter;
-  margin-bottom: 20px;
-  position: relative;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  padding: 4px;
-  background-color: #f1f1f1;
-  border-radius: 8px;
-  margin-bottom: 6px;
-}
-
-.wizzard .text-container {
-  background-color: red;
-  position: relative;
-}
-
-.wizzard .circle {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #443988;
-  color: white;
-  text-align: center;
-  line-height: 50px;
-  margin-right: 10px;
-}
-
-.wizzard p {
-  vertical-align: top;
-  margin: 0;
-}
-
-.wizzard li::before {
-  content: "";
-  position: absolute;
-  left: 28px;
-  top: 53px;
-  width: 1px;
-  height: 11px;
-  background-color: #443988;
-}
-
-.wizzard li::after {
-  content: "";
-  position: absolute;
-  left: 28px;
-  top: -7px;
-  width: 1px;
-  height: 11px;
-  background-color: #443988;
-}
-
-.wizzard li:first-child:after {
-  display: none;
-}
-
-.wizzard li:last-child:before {
-  display: none;
 }
