@@ -122,7 +122,7 @@ function generateCSS() {
 	cssOutput.textContent = `.box-chart {
   margin-top: 10px;
   width: ${boxCharWidth}%;
-  margin-left: 100%;
+  margin-left: 50%;
   transform: translateX(-50%);
 }
 
