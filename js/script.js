@@ -121,7 +121,6 @@ function generateCSS() {
 	const cssOutput = document.getElementById('generated-css');
 	cssOutput.textContent = `.box-chart {
   margin-top: 10px;
-  width: ${boxCharWidth}%;
   margin-left: 50%;
   transform: translateX(-50%);
 }
@@ -216,7 +215,6 @@ function applyBoxColor(color) {
 function updateCSS() {
 	const sheet = new CSSStyleSheet();
 	sheet.replaceSync(`
-		.box-chart { width: ${boxCharWidth}%; }
 		.box-container-rounded { 
 			border-radius: ${boxBorderRadius}px;
 			background-color: ${boxBackgroundColor};
@@ -296,7 +294,8 @@ function updateChartCaption(caption) {
 function updateBoxChartWidth(value){
 	boxCharWidth = value;
 	document.querySelector('#box-chart-width-value').innerText = `${boxCharWidth}%`;
-	updateCSS();
+	document.querySelector('.box-chart').style.width = `${boxCharWidth}%`
+	generateHTML();
 }
 
 function updateBorderThick(thick) {
