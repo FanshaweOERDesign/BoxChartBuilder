@@ -120,9 +120,8 @@ function generateHTML() {
 function generateCSS() {
 	const cssOutput = document.getElementById('generated-css');
 	cssOutput.textContent = `.box-chart {
+  margin: 0 auto;
   margin-top: 10px;
-  margin-left: 50%;
-  transform: translateX(-50%);
 }
 
 .box-chart > .title {
