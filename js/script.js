@@ -97,6 +97,7 @@ function onGridItemClick(e) {
 	document.querySelector('.inputs-container').classList.remove('hide');
 	document.querySelector('#tools-container').classList.remove('hide');
 	document.querySelector('#info-container').classList.add('hide');
+	document.querySelector('.box-chart').style.width = `${boxCharWidth}%`
 	
 	generateHTML();
 	generateCSS();
