@@ -120,9 +120,8 @@ footer a {
 
 /*** Box chart preview ***/
 .box-chart {
+  margin: 0 auto;
   margin-top: 10px;
-  margin-left: 50%;
-  transform: translateX(-50%);
 }
 
 .box-chart>.title {
