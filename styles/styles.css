@@ -255,6 +255,10 @@ footer a {
   gap: 4px;
 }
 
+.toolbar button.active {
+  background-color: #fff4f4;
+}
+
 button,
 .color,
 select {
