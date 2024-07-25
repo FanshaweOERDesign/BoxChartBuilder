@@ -109,8 +109,8 @@ function generateHTML() {
 	editorContent = editorContent.replaceAll('spellcheck="false"', '');
 	editorContent = editorContent.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>');
 	editorContent = editorContent.replace(/<i>(.*?)<\/i>/g, '<em>$1</em>');
-	editorContent = editorContent.replace(/<u>(.*?)<\/u>/g, '<span style="text-decoration: underline;">$1</span>');
-	editorContent = editorContent.replace(/<u>(.*?)<\/u>/g, '<span style="text-decoration: underline;">$1</span>');
+	editorContent = editorContent.replace(/<u\b[^>]*>(.*?)<\/u>/g, '<span style="text-decoration: underline;">$1</span>');
+	editorContent = editorContent.replace(/<span>(.*?)<\/span>/g, '$1');
 
 	const htmlOutput = document.getElementById('generated-html');
 	const formattedHTML = html_beautify(editorContent);
@@ -186,6 +186,7 @@ function execCmd(command, value = null) {
 		document.execCommand(command, false, value);
 	}
 	generateHTML();
+	updateEditor();
 }
 
 function applyBoxColor(color) {
@@ -356,3 +357,98 @@ function copy(id) {
 		copyButton.innerHTML = originalText;
 	}, 2000);
 };
+
+document.addEventListener('selectionchange', updateEditor);
+
+function updateEditor() {
+	const selection = document.getSelection();
+	const focusNode = selection.focusNode;
+	const activeElement = document.activeElement;
+	if (!focusNode.parentElement.closest('[contenteditable]')) {
+		return;
+	}
+
+	updateCommandButtons();
+	updateFormatBlockSelect();
+	updateLinkButton(focusNode);
+	updateBackColorButon(activeElement);
+	updateForeColorButton(focusNode);
+	cleanUpHTML(focusNode);
+
+}
+
+function cleanUpHTML(focusNode) {
+	if (focusNode.nodeType === Node.ELEMENT_NODE && focusNode.nodeName === 'DIV' && focusNode.innerHTML === '<br>') {
+		const p = document.createElement('p');
+		p.innerHTML = focusNode.innerHTML;
+		focusNode.parentNode.replaceChild(p, focusNode);
+	}
+
+	removeFontSizeStylesFromFigure();
+	generateHTML();
+}
+
+function removeFontSizeStylesFromFigure() {
+	const figure = document.querySelector('figure');
+	const elementsWithFontSize = figure.querySelectorAll('[style*="font-size"]');
+	elementsWithFontSize.forEach(element => {
+		element.style.fontSize = '';
+		if (!element.getAttribute('style')) {
+			element.removeAttribute('style');
+		}
+	});
+}
+
+function updateCommandButtons() {
+	const commands = ['bold', 'italic', 'underline', 'insertOrderedList', 'insertUnorderedList', 'justifyLeft', 'justifyCenter', 'justifyRight'];
+	commands.forEach(command => {
+		const button = document.getElementById(command);
+		button.classList.toggle('active', document.queryCommandState(command));
+	});
+}
+
+function updateFormatBlockSelect() {
+	const formatBlockSelect = document.getElementById('formatBlock');
+	const currentBlock = document.queryCommandValue('formatBlock').toLowerCase();
+	Array.from(formatBlockSelect.options).forEach(option => {
+		if (option.value.toLowerCase() === currentBlock) {
+			formatBlockSelect.selectedIndex = option.index;
+		}
+	});
+}
+
+function updateLinkButton(focusNode) {
+	const linkButton = document.getElementById('createLink');
+	let isLink = false;
+	if (focusNode) {
+		const anchorNode = focusNode.nodeType === Node.TEXT_NODE ? focusNode.parentElement : focusNode;
+		if (anchorNode.closest('a')) {
+			isLink = true;
+		}
+	}
+	linkButton.classList.toggle('active', isLink);
+}
+
+function updateBackColorButon(activeElement) {
+	if (activeElement.classList.contains('box-container-rounded')) {
+		const backgroundColor = window.getComputedStyle(activeElement).getPropertyValue('background-color');
+		document.getElementById('backColor').value = rgbToHex(backgroundColor);
+	}
+}
+
+function updateForeColorButton(focusNode) {
+	if (focusNode.nodeType === Node.TEXT_NODE) {
+		const color = window.getComputedStyle(focusNode.parentElement).getPropertyValue('color');
+		document.getElementById('foreColor').value = rgbToHex(color);
+	}
+}
+
+function componentToHex(c) {
+	const hex = c.toString(16);
+	return hex.length === 1 ? `0${hex}` : hex;
+}
+
+function rgbToHex(rgb) {
+	const [r, g, b] = rgb.replace('rgb(', '').replace(')', '').split(',').map(Number);
+	return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
