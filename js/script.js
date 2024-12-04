@@ -73,7 +73,6 @@ function onGridItemClick(e) {
 	previewChartDiv.innerHTML = '';
 
 	let figureElement = document.createElement('figure');
-	figureElement.classList.add('wp-caption');
 	let chartDiv = document.createElement('div');
 	chartDiv.classList.add('box-chart');
 
