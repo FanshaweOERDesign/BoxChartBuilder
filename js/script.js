@@ -8,8 +8,11 @@ let boxBorderColor = "#000";
 let boxBorderRadius = "12";
 let boxCharWidth = "100";
 
+
 gridContainer.addEventListener("mouseleave", removeHover);
 previewChartContainer.addEventListener('input', generateHTML);
+const documentBody = document.querySelector('body');
+documentBody.addEventListener('click', generateHTML);
 
 for (let i = 0; i < 6; i++) {
 	for (let j = 0; j < 6; j++) {
@@ -103,7 +106,7 @@ function onGridItemClick(e) {
 }
 
 function generateHTML() {
-	let editorContent = document.getElementById('preview-chart').innerHTML;
+	let editorContent = previewChartContainer.innerHTML;
 	editorContent = editorContent.replaceAll('contenteditable="true"', '');
 	editorContent = editorContent.replaceAll('spellcheck="false"', '');
 	editorContent = editorContent.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>');
@@ -111,6 +114,61 @@ function generateHTML() {
 	editorContent = editorContent.replace(/<u\b[^>]*>(.*?)<\/u>/g, '<span style="text-decoration: underline;">$1</span>');
 	editorContent = editorContent.replace(/<span>(.*?)<\/span>/g, '$1');
 
+	//Debugging
+	console.log(`Font color: ${fontColor}`);
+	console.log(`Box background color: ${boxBackgroundColor}`);
+	console.log(`Box border color: ${boxBorderColor}`);
+	console.log(`Box border thick: ${boxBorderThick}`);
+	console.log(`Box border radius: ${boxBorderRadius}`);
+
+	const titleElement = previewChartContainer.querySelector('.box-chart .title');
+	if (titleElement) {
+		titleElement.style.color = titleColor;
+	}
+
+	const boxes = previewChartContainer.querySelectorAll('.box-container-rounded');
+	boxes.forEach(element => {
+		let styleAttr = element.getAttribute('style');
+		if (styleAttr) {
+			//replace border-radius and background-color if they exist in the style attribute
+			styleAttr = styleAttr.replace(/border-radius:\s*\d+px;/, `border-radius: ${boxBorderRadius}px;`);
+			styleAttr = styleAttr.replace(/background-color:\s*[^;]+;/, `background-color: ${boxBackgroundColor};`);
+			styleAttr = styleAttr.replace(/\s+color:\s*[^;]+;/, ` color: ${fontColor};`);
+			
+		} else {
+			styleAttr = `background-color: ${boxBackgroundColor}; color: ${fontColor}; border-radius: ${boxBorderRadius}px;`;
+		}
+
+		element.setAttribute('style', styleAttr);
+	});
+
+	const borderedBoxes = previewChartContainer.querySelectorAll('.box-container-rounded.bordered');
+	borderedBoxes.forEach(element => {
+		let styleAttr = element.getAttribute('style');
+		if (styleAttr.includes('border:')) {
+			
+			styleAttr = styleAttr.replace(/\s+border:\s*[^;]+;/, ` border: ${boxBorderThick}px solid ${boxBorderColor};`);	
+			
+		} else {
+			styleAttr += ` border: ${boxBorderThick}px solid ${boxBorderColor};`;
+		}
+
+		element.setAttribute('style', styleAttr);
+	});
+
+	//set any headings inside the boxes to the font color
+	const headings = previewChartContainer.querySelectorAll('.box-container-rounded h1, .box-container-rounded h2, .box-container-rounded h3, .box-container-rounded h4, .box-container-rounded h5, .box-container-rounded h6');
+	headings.forEach(element => {
+		let styleAttr = element.getAttribute('style');
+		if (styleAttr) {
+			styleAttr = styleAttr.replace(/\s*color:\s*[^;]+;/, `color: ${fontColor};`);
+		}
+		else {
+			styleAttr = `color: ${fontColor};`;
+		}
+		element.setAttribute('style', styleAttr);
+	});
+	 
 	const htmlOutput = document.getElementById('generated-html');
 	const formattedHTML = html_beautify(editorContent);
 	htmlOutput.textContent = formattedHTML;
@@ -125,7 +183,6 @@ function generateCSS() {
 }
 
 .box-chart > .title {
-  color: ${titleColor};
   text-align: center;
 }
 
@@ -136,25 +193,9 @@ function generateCSS() {
 }
 
 .box-container-rounded {
-  background-color: ${boxBackgroundColor};
-  border-radius: ${boxBorderRadius}px;
   padding: 10px;
   margin-right: 10px;
   flex: 1;
-  color: ${fontColor};
-}
-
-.box-container-rounded.bordered {
-  border: ${boxBorderThick}px solid ${boxBorderColor};
-}
-
-.box-container-rounded h1,
-.box-container-rounded h2,
-.box-container-rounded h3,
-.box-container-rounded h4,
-.box-container-rounded h5,
-.box-container-rounded h6 {
-  color: ${fontColor};
 }
 
 @media screen and (max-width: 500px) {
@@ -239,16 +280,19 @@ function updateCSS() {
 
 function applyGeneralBoxColor(color) {
 	boxBackgroundColor = color;
+	generateHTML();
 	updateCSS();
 }
 
 function applyGeneralFontColor(color) {
 	fontColor = color;
+	generateHTML();
 	updateCSS();
 }
 
 function applyTitleFontColor(color) {
 	titleColor = color;
+	generateHTML();
 	updateCSS();
 }
 
@@ -320,6 +364,7 @@ function updateBorderThick(thick) {
 
 function applyBoxBorderColor(color) {
 	boxBorderColor = color;
+	generateHTML();
 	updateCSS();
 }
 
@@ -328,6 +373,7 @@ function updateBorderRadius(radius) {
 	if (radius === ''){
 		boxBorderRadius = 0;
 	}
+	generateHTML();
 	updateCSS();
 }
 
@@ -363,7 +409,7 @@ function updateEditor() {
 	const selection = document.getSelection();
 	const focusNode = selection.focusNode;
 	const activeElement = document.activeElement;
-	if (!focusNode.parentElement.closest('[contenteditable]')) {
+	if (!focusNode || !focusNode.parentElement.closest('[contenteditable]')) {
 		return;
 	}
 
