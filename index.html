@@ -218,7 +218,20 @@ SOFTWARE.
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
     <script src="js/script.js"></script>
-
+    <script>
+        // track visits
+        (async function () {
+            try{
+                const params = new URLSearchParams({
+                  appId: window.location.pathname.split('/').filter(Boolean)[0] || 'unknown',
+                  t: Date.now()
+                });
+                await fetch(`https://apphub-analytics-server-production.up.railway.app/track.gif?${params.toString()}`); 
+            } catch(err) {
+                console.error(err);
+            }
+        })();
+    </script>
 </body>
 
 </html>
