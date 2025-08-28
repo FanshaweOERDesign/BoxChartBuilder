@@ -106,7 +106,7 @@ function onGridItemClick(e) {
 }
 
 function generateHTML() {
-	let editorContent = previewChartContainer.innerHTML;
+	let editorContent = DOMPurify.sanitize(previewChartContainer.innerHTML);
 	editorContent = editorContent.replaceAll('contenteditable="true"', '');
 	editorContent = editorContent.replaceAll('spellcheck="false"', '');
 	editorContent = editorContent.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>');
