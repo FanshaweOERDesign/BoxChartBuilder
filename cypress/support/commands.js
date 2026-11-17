@@ -1,0 +1,1 @@
+// Register shared custom commands here with Cypress.Commands.add().

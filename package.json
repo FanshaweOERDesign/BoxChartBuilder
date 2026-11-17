@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "cypress": "^16.3.0",
+    "serve": "^14.2.8"
+  },
+  "name": "boxchartbuilder",
+  "version": "1.0.0",
+  "description": "Create accessible box chart diagrams with a WYSIWYG (What You See Is What You Get) editor that generates HTML and CSS code for use in Pressbooks.  \r [Online version](https://fanshaweoerdesign.github.io/BoxChartBuilder/)",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "serve .",
+    "start:test": "serve -l 3000",
+    "test": "cypress run",
+    "test:open": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FanshaweOERDesign/BoxChartBuilder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/FanshaweOERDesign/BoxChartBuilder/issues"
+  },
+  "homepage": "https://github.com/FanshaweOERDesign/BoxChartBuilder#readme"
+}
