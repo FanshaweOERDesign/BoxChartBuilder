@@ -14,6 +14,10 @@ Create accessible box chart diagrams with a WYSIWYG (What You See Is What You Ge
 1. **Create a Chart:** Use the editor to design your box chart diagram.
 2. **Copy the Code:** Click the "Copy" button to copy the code to your clipboard.
 
+## Deployment
+
+The GitHub Actions workflow runs Cypress on pull requests and pushes to `main`. Pushes and manual runs on `main` deploy to GitHub Pages only after the tests pass. Configure the repository's Pages source as **GitHub Actions**.
+
 ## License
 
 Box Chart Builder was created by Stephany Ceron at the Fanshawe OER Design studio, and is released under the MIT license. Feel free to use, modify, and distribute it as you see fit.
