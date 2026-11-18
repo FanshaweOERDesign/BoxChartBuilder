@@ -10,16 +10,14 @@ describe('BoxChartBuilder', () => {
 
     it('should display the correct HTML for the selected grid item', () => {
         cy.get(".grid-item[row='1'][col='1']").should('be.visible').click();
-        cy.get(".language-markup").should('be.visible').invoke('html').then((html) => {
-            expect(html).to.include('<div class="box-container-rounded" style="background-color: #3B5372; color: #FFF; border-radius: 12px;">');
-        });
+        cy.get("#generated-html").should('be.visible')
+            .should('contain.text', '<div class="box-container-rounded" style="background-color: #3B5372; color: #FFF; border-radius: 12px;">');
     });
 
     it('should display the correct CSS for the selected grid item', () => {
         cy.get(".grid-item[row='1'][col='1']").should('be.visible').click();
-        cy.get("#css").should('be.visible').click();
-        cy.get(".language-css").should('be.visible').invoke('html').then((css) => {
-            expect(css).to.include('.box-container-rounded {');
-        });
+        cy.contains('button', 'Custom CSS').should('be.visible').click();
+        cy.get("#generated-css").should('be.visible')
+            .should('contain.text', '.box-container-rounded {');
     });
 });
